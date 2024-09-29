@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hrm/util/images/images.dart';
 import 'package:hrm/util/style.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,121 +11,343 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  String? txt;
+  Color? color;
+  int tap = 0;
+
+  tapscan() {
+    setState(() {
+      tap++;
+      if (tap <= 1) {
+        txt = "check-in";
+        color = Colors.amber;
+      } else if (tap == 2) {
+        txt = "check-out";
+        color = Colors.red;
+      } else if (tap == 3) {
+        tap = 0;
+        txt = "success";
+        color = Colors.blueAccent;
+      }
+    });
+  }
+
+  String getCurrunDate() {
+    final DateTime now = DateTime.now();
+    final DateFormat formattor = DateFormat('yyyy/MM/dd');
+    return formattor.format(now);
+  }
+
+  @override
+  void initState() {
+    tapscan();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 10),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TableCalendar(
-              firstDay: DateTime.utc(2010, 1, 1),
-              lastDay: DateTime.utc(2030, 12, 31),
-              focusedDay: _focusedDay,
-              calendarFormat: _calendarFormat,
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              },
-              onFormatChanged: (format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              },
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  height: 30,
-                  width: MediaQuery.of(context).size.width / 3,
-                  decoration: const BoxDecoration(
-                      color: Colors.greenAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: InkWell(
-                    onTap: () {},
-                    child: const Center(
-                        child: Text(
-                      'Check-In',
-                      style: Styles.txtRegularblack,
-                    )),
+    return Column(
+      children: [
+        // User Profile Card (Fixed position at the top)
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 4,
+          child: Card(
+            shadowColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.height / 20,
+                    child: Image.asset(
+                      Images.profilevector,
+                    ),
                   ),
-                ),
-                Container(
-                  height: 30,
-                  width: MediaQuery.of(context).size.width / 3,
-                  decoration: const BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: InkWell(
-                    onTap: () {},
-                    child: const Center(
-                        child: Text(
-                      'Check-Out',
-                      style: Styles.txtRegularblack,
-                    )),
-                  ),
-                )
-              ],
-            ),
-          ),
-          ListView.builder(
-            itemCount: 5,
-            shrinkWrap: true,
-            primary: false,
-            itemBuilder: (context, index) {
-              return const SizedBox(
-                height: 110,
-                width: 100,
-                child: Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('ວັນສຸກທີ 2024-09-20 :  '),
-                            Text('ວັນສຸກທີ 2024-09-20 : '),
-                            Text('ສະຖານະການມາວຽກ : '),
-                            Text('ຈຳນວນວັນຂາດໃນເດືອນ : ')
-                          ],
+                        const Text(
+                          'Anon BouaBane',
+                          style: Styles.txtTitleWhite,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('  ເຂົ້າວຽກເວລາ 08:39:10 '),
-                            Text('  ອອກວຽກເວລາ 16:39:58 '),
-                            Text('  ມາຊ້າ 9 ນາທີ 10 ວິນາທີ'),
-                            Text('  2 ວັນ')
-                          ],
-                        )
+                        const Text(
+                          'ພະແນກ : ໄອທີ',
+                          style: Styles.txtRegularWhite,
+                        ),
+                        const Text('ຕຳແຫນ່ງ : ຍ່າງໄປຍ່າງມາ',
+                            style: Styles.txtRegularWhite),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width / 4,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            child: InkWell(
+                              child: Center(
+                                  child: Text(
+                                txt.toString(),
+                                style: Styles.txtRegularWhite,
+                              )),
+                              onTap: () {
+                                tapscan();
+
+                                Navigator.pushNamed(context, 'scaner');
+                              },
+                            ))
                       ],
                     ),
                   ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text(
+                'today is  ',
+                style: Styles.txtRegularWhite,
+              ),
+              Text(
+                getCurrunDate(),
+                style: Styles.txtTitleWhite,
+              )
+            ],
+          ),
+        ),
+
+        // Expanded widget to allow the table to scroll correctly
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(5),
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal, // Horizontal scroll for table
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      1.5, // Increase width for horizontal scroll
+                  child: DataTable(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    columns: const <DataColumn>[
+                      DataColumn(
+                        headingRowAlignment: MainAxisAlignment.start,
+                        label: Text(
+                          'ວັນທີ',
+                          style: Styles.txtRegularWhite,
+                        ),
+                      ),
+                      DataColumn(
+                        headingRowAlignment: MainAxisAlignment.start,
+                        label: Text('ເຂົ້າວຽກ', style: Styles.txtRegularWhite),
+                      ),
+                      DataColumn(
+                        headingRowAlignment: MainAxisAlignment.start,
+                        label: Text('ອອກວຽກ', style: Styles.txtRegularWhite),
+                      ),
+                      DataColumn(
+                        headingRowAlignment: MainAxisAlignment.start,
+                        label: Text('ສະຖານະ', style: Styles.txtRegularWhite),
+                      ),
+                    ],
+                    rows: const <DataRow>[
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາຊ້າ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາຊ້າ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາຊ້າ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+                      DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text('2024/09/31')),
+                          DataCell(Text('06:30:23')),
+                          DataCell(Text('16:32:10')),
+                          DataCell(Text('ມາທັນ')),
+                        ],
+                      ),
+
+                      // Add more rows here
+                    ],
+                  ),
                 ),
-              );
-            },
-          )
-        ],
-      ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

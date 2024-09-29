@@ -9,7 +9,6 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-bool _ischeck = false;
 bool _isObScured = true;
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -87,41 +86,21 @@ class _FormLoginState extends State<FormLogin> {
               ),
             ),
           ),
-        
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Forgot password?",
-                    style: Styles.txtRegularBlue,
-                  )),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/register');
-                  },
-                  child: const Text(
-                    'Create an account?',
-                    style: Styles.txtRegularBlue,
-                  ))
-            ],
-          ),
-            Row(
-            children: [
-              const Text(
-                'show password',
-                style: Styles.txtRegularWhite,
-              ),
-              Checkbox(
-                  value: _ischeck,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _isObScured = !_isObScured;
-                      _ischeck = value ?? false;
-                    });
-                  })
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/register');
+                    },
+                    child: const Text(
+                      'Create an account?',
+                      style: Styles.txtRegularBlue,
+                    ))
+              ],
+            ),
           ),
           Container(
             height: 50,

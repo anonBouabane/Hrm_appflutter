@@ -9,7 +9,6 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-bool _ischecked = false;
 bool _isObscured = true;
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -128,19 +127,6 @@ class _FormRegisterState extends State<FormRegister> {
                 ),
               ),
             ),
-          ),
-          Row(
-            children: [
-              const Text('show password',style: Styles.txtRegularWhite,),
-              Checkbox(
-                  value: _ischecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _isObscured = !_isObscured;
-                      _ischecked = value ?? false;
-                    });
-                  }),
-            ],
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),

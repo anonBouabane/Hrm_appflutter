@@ -15,4 +15,5 @@ class Styles {
   static const txtTitleGrey = TextStyle(fontSize: 18, color: Colors.blueGrey);
 
   static const colrWhite = Colors.white;
+  static const colrwhite70 = Colors.white70;
 }

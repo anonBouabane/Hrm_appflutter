@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hrm/view/screen/dashboard/history.dart';
 import 'package:hrm/view/screen/dashboard/home.dart';
-import 'package:hrm/view/screen/dashboard/profile_screen.dart';
+import 'package:hrm/view/screen/dashboard/activation_screen.dart';
 import 'package:hrm/view/screen/dashboard/setting_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -14,16 +14,14 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   List children = [
     const HomeScreen(),
-    const ProfileScreen(),
+    const ActivationScreen(),
     const HistoryScreen(),
-     const SettingScreen()
+    const SettingScreen()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: children[curRentIndex],
-      ),
+      body: children[curRentIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: curRentIndex,
           onTap: ontapIndex,
@@ -37,9 +35,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 label: "home"),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.person_2_outlined,
+                  Icons.description_outlined,
                 ),
-                label: "profile"),
+                label: "ການເຄື່ອນໄຫວ"),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.calendar_month_rounded,
