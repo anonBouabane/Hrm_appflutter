@@ -11,25 +11,27 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-          shrinkWrap: true,
-          primary: false,
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return Card(
-                child: ListTile(
-              title: const Text('ວັນຈັນ'),
-              subtitle: const Text('(ເຂົ້າວຽກຊ້າ)'),
-              isThreeLine: true,
-              trailing: const Text('2024-09-22'),
-              selected: true,
-              onTap: () {},
-              selectedColor: Styles.colrWhite,
-              autofocus: true,
-            ));
-          }),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+            shrinkWrap: true,
+            primary: false,
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              return Card(
+                  child: ListTile(
+                title: const Text('ວັນຈັນ'),
+                subtitle: const Text('(ເຂົ້າວຽກຊ້າ)'),
+                isThreeLine: true,
+                trailing: const Text('2024-09-22'),
+                selected: true,
+                onTap: () {},
+                selectedColor: Styles.colrWhite,
+                autofocus: true,
+              ));
+            }),
+      ),
     );
   }
 }

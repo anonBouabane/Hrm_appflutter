@@ -13,6 +13,7 @@ class _ActivationScreenState extends State<ActivationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
         title: const Text(
           'ການເຄື່ອນໄຫວ',
@@ -53,8 +54,8 @@ class _ActivationScreenState extends State<ActivationScreen> {
                   padding: const EdgeInsets.all(2),
                   itemCount: 8,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Container(

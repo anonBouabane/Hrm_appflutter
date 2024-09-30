@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hrm/util/images/images.dart';
 import 'package:hrm/util/style.dart';
 import 'package:hrm/view/screen/auth/login_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -11,6 +12,22 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  void openWhatapp(String phoneNumber) async {
+    final String encodedPhoneNumber = Uri.encodeComponent(phoneNumber);
+    final Uri whatAppUrl =
+        Uri.parse("whatsapp://send?phone=$encodedPhoneNumber");
+    if (await canLaunchUrl(whatAppUrl)) {
+      await launchUrl(whatAppUrl);
+    } else {
+      // Handle the error when WhatsApp cannot be launched
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('WhatsApp is not installed or cannot be opened'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,14 +107,15 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print('ok');
+                          Navigator.pushNamed(context, 'rules');
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Row(
                             children: [
+                              Icon(Icons.rule),
                               Text(
-                                "ກົດລະບຽບ",
+                                "   ກົດລະບຽບ",
                                 style: Styles.txtRegularWhite,
                               ),
                               Spacer(),
@@ -113,14 +131,15 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print('ok');
+                          openWhatapp('2077995490');
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Row(
                             children: [
+                              Icon(Icons.call_outlined),
                               Text(
-                                "ຕິດຕໍ່ທີມໄອທີ",
+                                "   ຕິດຕໍ່ທີມໄອທີ",
                                 style: Styles.txtRegularWhite,
                               ),
                               Spacer(),
@@ -149,7 +168,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           style: Styles.txtTitleWhite,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(14.0),
                           child: Container(
                               decoration: const BoxDecoration(
                                 border: Border(
@@ -213,6 +232,11 @@ class _SettingScreenState extends State<SettingScreen> {
                                         '  English',
                                         style: Styles.txtRegularblack,
                                       ),
+                                      const Spacer(),
+                                      const Icon(
+                                        Icons.check,
+                                        color: Colors.red,
+                                      )
                                     ],
                                   ),
                                 ),
