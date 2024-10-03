@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hrm/util/images/images.dart';
 import 'package:hrm/util/style.dart';
@@ -12,12 +14,22 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  void openWhatapp(String phoneNumber) async {
+  void openWhatapp(String phoneNumber, String message) async {
     final String encodedPhoneNumber = Uri.encodeComponent(phoneNumber);
-    final Uri whatAppUrl =
-        Uri.parse("whatsapp://send?phone=$encodedPhoneNumber");
-    if (await canLaunchUrl(whatAppUrl)) {
-      await launchUrl(whatAppUrl);
+    final String encodedMessage =
+        Uri.encodeComponent(message); // Encode the message
+    Uri uri;
+
+    if (Platform.isAndroid) {
+      uri = Uri.parse(
+          "whatsapp://send?phone=$encodedPhoneNumber&text=$encodedMessage");
+    } else {
+      uri = Uri.parse(
+          "whatsapp://send?phone=$encodedPhoneNumber&text=$encodedMessage");
+    }
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       // Handle the error when WhatsApp cannot be launched
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,55 +55,145 @@ class _SettingScreenState extends State<SettingScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, 'profile');
-                },
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 6,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 70,
-                            width: 70,
-                            child: CircleAvatar(
-                              child: Image.asset(
-                                Images.profilevector,
-                                scale: 1,
-                              ),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Anon Bouaban",
-                                  style: Styles.txtTitleWhite,
-                                ),
-                                Text(
-                                  'ID : 0119251',
-                                  style: Styles.txtRegularWhite,
-                                )
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          const Icon(Icons.arrow_forward_ios_rounded)
-                        ],
-                      ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      Images.profilevector,
+                      scale: 2,
                     ),
-                  ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.person_2_outlined,
+                          color: Colors.grey,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '  Name',
+                              style: Styles.txtRegularGrey,
+                            ),
+                            Text(
+                              '  Anon BouaBane',
+                              style: Styles.txtRegularWhite,
+                            ),
+                            Text('  this is not your fullname in company.')
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.lightGreen,
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      indent: 30,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.call,
+                          color: Colors.grey,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '  phone',
+                              style: Styles.txtRegularGrey,
+                            ),
+                            Text(
+                              '  2077995490',
+                              style: Styles.txtRegularWhite,
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.lightGreen,
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      indent: 30,
+                    ),
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.home_work_outlined,
+                          color: Colors.grey,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '   depart',
+                              style: Styles.txtRegularGrey,
+                            ),
+                            Text(
+                              '   ໄອທີ',
+                              style: Styles.txtRegularWhite,
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.lightGreen,
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      indent: 30,
+                    ),
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.account_tree_outlined,
+                          color: Colors.grey,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '  position',
+                              style: Styles.txtRegularGrey,
+                            ),
+                            Text(
+                              '   manager',
+                              style: Styles.txtRegularWhite,
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.lightGreen,
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      indent: 30,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 5,
               ),
               SizedBox(
                   child: Card(
@@ -131,7 +233,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          openWhatapp('2077995490');
+                          openWhatapp("2077995490", "hello");
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
