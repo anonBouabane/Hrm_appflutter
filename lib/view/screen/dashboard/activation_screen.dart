@@ -49,51 +49,55 @@ class _ActivationScreenState extends State<ActivationScreen> {
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: GridView.builder(
-                  padding: const EdgeInsets.all(2),
-                  itemCount: 8,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Styles.colrwhite70),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ວັນລາປ່ວຍ',
-                              style: Styles.txtTitleblack,
-                            ),
-                            Text(
-                              'ທັງຫມົດ : 30 ວັນ',
-                              style: Styles.txtRegularblack,
-                            ),
-                            Text(
-                              'ນຳໃຊ້ : 10 ວັນ',
-                              style: Styles.txtRegularblack,
-                            ),
-                            Text(
-                              'ຍັງເຫລືອ : 20 ວັນ',
-                              style: Styles.txtRegularblack,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            )
+            gridView()
           ],
         ),
       ),
     );
+  }
+
+  Expanded gridView() {
+    return Expanded(
+            child: GridView.builder(
+                padding: const EdgeInsets.all(2),
+                itemCount: 8,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Styles.colrwhite70),
+                    child: const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'ວັນລາປ່ວຍ',
+                            style: Styles.txtTitleblack,
+                          ),
+                          Text(
+                            'ທັງຫມົດ : 30 ວັນ',
+                            style: Styles.txtRegularblack,
+                          ),
+                          Text(
+                            'ນຳໃຊ້ : 10 ວັນ',
+                            style: Styles.txtRegularblack,
+                          ),
+                          Text(
+                            'ຍັງເຫລືອ : 20 ວັນ',
+                            style: Styles.txtRegularblack,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          );
   }
 }

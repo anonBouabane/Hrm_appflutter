@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hrm/Route/route_helper.dart';
+import 'package:hrm/theme/theme.dart';
 import 'package:hrm/view/screen/auth/login_screen.dart';
 import 'package:no_context_navigation/no_context_navigation.dart';
 
@@ -15,12 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         navigatorKey: NavigationService.navigationKey,
         onGenerateRoute: RouteHelper.generateRoute,
-        theme: ThemeData.dark(),
+        theme: AppTheme.appThemedarkMode,
         title: 'HRM',
-        // theme: ThemeData(
-        //   // brightness: Brightness.light,
-        // ),
-
         debugShowCheckedModeBanner: false,
         home: const LoginScreen());
   }
